@@ -42,7 +42,7 @@
     }
 
     main {
-      max-width: 1000px;
+      max-width: 1100px;
       margin: 0 auto;
       padding: 1.5rem;
       display: grid;
@@ -82,45 +82,45 @@
     .failed { background: rgba(239,68,68,0.15); color: var(--fail); }
     .in-progress { background: rgba(56,189,248,0.15); color: var(--accent); }
 
+    .phase-content {
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 1.5rem;
+      align-items: start;
+    }
+
     ul {
       padding-left: 1.2rem;
       margin: 0;
     }
 
-    /* two‑column layout: text left, media right */
-    .phase-content {
+    /* MEDIA GRID — handles unlimited images & videos */
+    .media-grid {
       display: grid;
-      grid-template-columns: 1fr 280px;
-      gap: 1.5rem;
-      align-items: start;
-    }
-
-    /* gallery container for all images / videos */
-    .phase-media {
-      display: flex;
-      flex-wrap: wrap;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
       gap: 0.75rem;
     }
 
-    .phase-media img,
-    .phase-media video {
+    .media-grid img,
+    .media-grid video,
+    .media-grid iframe {
       width: 100%;
-      height: auto;
       border-radius: 0.75rem;
-      object-fit: cover;
       border: 1px solid rgba(255,255,255,0.08);
+      background: #000;
+      object-fit: cover;
+      aspect-ratio: 1 / 1;
     }
 
-    /* on wider screens, arrange multiple images in a grid */
-    @media (min-width: 700px) {
-      .phase-media {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-      }
+    .media-grid video {
+      object-fit: contain;
     }
 
-    /* stack on narrow screens */
-    @media (max-width: 700px) {
+    .media-grid iframe {
+      aspect-ratio: 16 / 9;
+    }
+
+    @media (max-width: 900px) {
       .phase-content {
         grid-template-columns: 1fr;
       }
@@ -132,12 +132,9 @@
       color: var(--muted);
       font-size: 0.9rem;
     }
-
-    @media (max-width: 600px) {
-      .phase { padding: 1.25rem; }
-    }
   </style>
 </head>
+
 <body>
 
   <header>
@@ -146,7 +143,8 @@
   </header>
 
   <main>
-    <!-- Phase 1 – unchanged -->
+
+    <!-- Phase 1 -->
     <section class="phase">
       <div class="phase-header">
         <h2>Phase 1 — Initial Setup</h2>
@@ -158,13 +156,13 @@
           <li>Power delivery verified</li>
           <li>Basic sensor communication working</li>
         </ul>
-        <div class="phase-media">
-          <img src="images/phase1.jpeg" alt="Phase 1 hardware setup" />
+        <div class="media-grid">
+          <img src="images/phase1.jpeg" alt="Phase 1 hardware setup">
         </div>
       </div>
     </section>
 
-    <!-- Phase 2 – your original text + two extra image slots (replace the src with your files) -->
+    <!-- Phase 2 -->
     <section class="phase">
       <div class="phase-header">
         <h2>Phase 2 — First Prototype</h2>
@@ -176,18 +174,13 @@
           <li>Loose jumper wires caused intermittent failures</li>
           <li>Need PCB or soldered solution</li>
         </ul>
-        <div class="phase-media">
-          <!-- your original image – alt kept exactly as you wrote -->
-          <img src="images/phase2.jpeg" alt="Phase 2 prototype" />
-          <!-- two more images – change src and alt as needed -->
-          <img src="images/phase2-2.jpeg" alt="Phase 2 prototype (alternate angle)" />
-          <img src="images/phase2-3.jpeg" alt="Phase 2 prototype (detail)" />
-          <!-- you can also add videos: <video src="..." controls></video> -->
+        <div class="media-grid">
+          <img src="images/phase2.jpeg" alt="Phase 2 prototype">
         </div>
       </div>
     </section>
 
-    <!-- Phase 3 – unchanged -->
+    <!-- Phase 3 -->
     <section class="phase">
       <div class="phase-header">
         <h2>Phase 3 — Iteration</h2>
@@ -199,13 +192,13 @@
           <li>Refactoring firmware</li>
           <li>Adding logging and error handling</li>
         </ul>
-        <div class="phase-media">
-          <img src="images/phase3.jpg" alt="Phase 3 iteration" />
+        <div class="media-grid">
+          <img src="images/phase3.jpeg" alt="Phase 3 iteration">
         </div>
       </div>
     </section>
 
-    <!-- Phase 4 – unchanged -->
+    <!-- Phase 4 -->
     <section class="phase">
       <div class="phase-header">
         <h2>Phase 4 — Validation</h2>
@@ -216,13 +209,13 @@
           <li>Stress testing</li>
           <li>Power consumption measurements</li>
         </ul>
-        <div class="phase-media">
-          <img src="images/phase4.jpg" alt="Phase 4 testing" />
+        <div class="media-grid">
+          <img src="images/phase4.jpeg" alt="Phase 4 testing">
         </div>
       </div>
     </section>
 
-    <!-- Phase 5 – unchanged -->
+    <!-- Phase 5 -->
     <section class="phase">
       <div class="phase-header">
         <h2>Phase 5 — Final Build</h2>
@@ -233,11 +226,12 @@
           <li>Final enclosure</li>
           <li>Documentation and release</li>
         </ul>
-        <div class="phase-media">
-          <img src="images/phase5.jpg" alt="Phase 5 final hardware" />
+        <div class="media-grid">
+          <img src="images/phase5.jpeg" alt="Phase 5 final hardware">
         </div>
       </div>
     </section>
+
   </main>
 
   <footer>
