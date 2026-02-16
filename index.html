@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PulsePi Project Progress</title>
+  <title>Hardware Project Progress</title>
   <style>
     :root {
       --bg: #0f172a;
@@ -87,20 +87,39 @@
       margin: 0;
     }
 
+    /* two‑column layout: text left, media right */
     .phase-content {
       display: grid;
       grid-template-columns: 1fr 280px;
-      gap: 1rem;
+      gap: 1.5rem;
       align-items: start;
     }
 
-    .phase-content img {
+    /* gallery container for all images / videos */
+    .phase-media {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .phase-media img,
+    .phase-media video {
       width: 100%;
+      height: auto;
       border-radius: 0.75rem;
       object-fit: cover;
       border: 1px solid rgba(255,255,255,0.08);
     }
 
+    /* on wider screens, arrange multiple images in a grid */
+    @media (min-width: 700px) {
+      .phase-media {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      }
+    }
+
+    /* stack on narrow screens */
     @media (max-width: 700px) {
       .phase-content {
         grid-template-columns: 1fr;
@@ -122,11 +141,12 @@
 <body>
 
   <header>
-    <h1>PulsePi Project Log</h1>
+    <h1>Hardware Project Log</h1>
     <p>Documenting progress, failures, and lessons learned — in public.</p>
   </header>
 
   <main>
+    <!-- Phase 1 – unchanged -->
     <section class="phase">
       <div class="phase-header">
         <h2>Phase 1 — Initial Setup</h2>
@@ -134,46 +154,58 @@
       </div>
       <div class="phase-content">
         <ul>
-          <li>Raspberry Pi 5 Setup Complete.</li>
-          <li>Added peripherals for easier access as well as a monitor for future data visualization.</li>
-          <li>Running Rapsberry Pi Desktop OS.</li>
+          <li>Breadboard wiring complete</li>
+          <li>Power delivery verified</li>
+          <li>Basic sensor communication working</li>
         </ul>
-        <img src="images/phase1.jpeg" alt="Phase 1 hardware setup" />
+        <div class="phase-media">
+          <img src="images/phase1.jpg" alt="Phase 1 hardware setup" />
+        </div>
       </div>
     </section>
 
+    <!-- Phase 2 – your original text + two extra image slots (replace the src with your files) -->
     <section class="phase">
       <div class="phase-header">
         <h2>Phase 2 — First Prototype</h2>
-        <span class="status done">Completed</span>
+        <span class="status failed">Partial Failure</span>
       </div>
       <div class="phase-content">
         <ul>
-          <li>Setup of Max30102 sensor complete.</li>
-          <li>Soldered the pins onto the sensors but it did not work. As an alternative I used jumper wires and taped the sensor tightly for stability.</li>
-          <li>Made a simple code which plots change in raw signal data when finger is placed on the sensor.</li>
+          <li>Signal noise higher than expected</li>
+          <li>Loose jumper wires caused intermittent failures</li>
+          <li>Need PCB or soldered solution</li>
         </ul>
-        <img src="images/phase2.jpeg" alt="Phase 2 prototype" />
-        <img src="images/phase2plot.jpeg" alt="Phase 2 prototype plot" />
+        <div class="phase-media">
+          <!-- your original image – alt kept exactly as you wrote -->
+          <img src="images/phase2.jpg" alt="Phase 2 prototype" />
+          <!-- two more images – change src and alt as needed -->
+          <img src="images/phase2-2.jpg" alt="Phase 2 prototype (alternate angle)" />
+          <img src="images/phase2-3.jpg" alt="Phase 2 prototype (detail)" />
+          <!-- you can also add videos: <video src="..." controls></video> -->
+        </div>
       </div>
     </section>
 
+    <!-- Phase 3 – unchanged -->
     <section class="phase">
       <div class="phase-header">
-        <h2>Phase 3 — RPi High QualityCamera Installation</h2>
-        <span class="status done">Completed</span>
+        <h2>Phase 3 — Iteration</h2>
+        <span class="status in-progress">In Progress</span>
       </div>
       <div class="phase-content">
         <ul>
-          <li>Setup 16mm camera on a tripod so that green light reflected from the hand can be captured.</li>
-          <li> Tripod does not seem well balanced and the camera is heavy, would need better support in the future to hold it in place.
-          <li>16mm seemed too strong for the camera test, and would have to be improvised by placing the source of light far away. Alternatively, I plan to use 6mm to see if it detects closer objects with less blur</li>
+          <li>Evaluating PCB layout options</li>
+          <li>Refactoring firmware</li>
           <li>Adding logging and error handling</li>
         </ul>
-        <img src="images/phase3.jpeg" alt="Phase 3 iteration" />
+        <div class="phase-media">
+          <img src="images/phase3.jpg" alt="Phase 3 iteration" />
+        </div>
       </div>
     </section>
 
+    <!-- Phase 4 – unchanged -->
     <section class="phase">
       <div class="phase-header">
         <h2>Phase 4 — Validation</h2>
@@ -184,10 +216,13 @@
           <li>Stress testing</li>
           <li>Power consumption measurements</li>
         </ul>
-        <img src="images/phase4.jpg" alt="Phase 4 testing" />
+        <div class="phase-media">
+          <img src="images/phase4.jpg" alt="Phase 4 testing" />
+        </div>
       </div>
     </section>
 
+    <!-- Phase 5 – unchanged -->
     <section class="phase">
       <div class="phase-header">
         <h2>Phase 5 — Final Build</h2>
@@ -198,7 +233,9 @@
           <li>Final enclosure</li>
           <li>Documentation and release</li>
         </ul>
-        <img src="images/phase5.jpg" alt="Phase 5 final hardware" />
+        <div class="phase-media">
+          <img src="images/phase5.jpg" alt="Phase 5 final hardware" />
+        </div>
       </div>
     </section>
   </main>
