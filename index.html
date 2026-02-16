@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hardware Project Progress</title>
+  <title>PulsePi Project Progress</title>
   <style>
     :root {
       --bg: #0f172a;
@@ -42,7 +42,7 @@
     }
 
     main {
-      max-width: 1100px;
+      max-width: 1000px;
       margin: 0 auto;
       padding: 1.5rem;
       display: grid;
@@ -82,22 +82,23 @@
     .failed { background: rgba(239,68,68,0.15); color: var(--fail); }
     .in-progress { background: rgba(56,189,248,0.15); color: var(--accent); }
 
-    .phase-content {
-      display: grid;
-      grid-template-columns: 1fr 420px;
-      gap: 1.5rem;
-      align-items: start;
-    }
-
     ul {
       padding-left: 1.2rem;
       margin: 0;
     }
 
-    /* MEDIA GRID — handles unlimited images & videos */
+    /* UPDATED LAYOUT */
+    .phase-content {
+      display: grid;
+      grid-template-columns: 1fr 350px;
+      gap: 1.2rem;
+      align-items: start;
+    }
+
+    /* MEDIA GRID (handles unlimited images + videos) */
     .media-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
       gap: 0.75rem;
     }
 
@@ -120,7 +121,7 @@
       aspect-ratio: 16 / 9;
     }
 
-    @media (max-width: 900px) {
+    @media (max-width: 700px) {
       .phase-content {
         grid-template-columns: 1fr;
       }
@@ -132,13 +133,17 @@
       color: var(--muted);
       font-size: 0.9rem;
     }
+
+    @media (max-width: 600px) {
+      .phase { padding: 1.25rem; }
+    }
   </style>
 </head>
 
 <body>
 
   <header>
-    <h1>Hardware Project Log</h1>
+    <h1>PulsePi Project Log</h1>
     <p>Documenting progress, failures, and lessons learned — in public.</p>
   </header>
 
@@ -152,13 +157,15 @@
       </div>
       <div class="phase-content">
         <ul>
-          <li>Breadboard wiring complete</li>
-          <li>Power delivery verified</li>
-          <li>Basic sensor communication working</li>
+          <li>Raspberry Pi 5 Setup Complete.</li>
+          <li>Added peripherals for easier access as well as a monitor for future data visualization.</li>
+          <li>Running Rapsberry Pi Desktop OS.</li>
         </ul>
+
         <div class="media-grid">
-          <img src="images/phase1.jpeg" alt="Phase 1 hardware setup">
+          <img src="images/phase1.jpeg" alt="Phase 1 hardware setup" />
         </div>
+
       </div>
     </section>
 
@@ -166,35 +173,41 @@
     <section class="phase">
       <div class="phase-header">
         <h2>Phase 2 — First Prototype</h2>
-        <span class="status failed">Partial Failure</span>
+        <span class="status done">Completed</span>
       </div>
       <div class="phase-content">
         <ul>
-          <li>Signal noise higher than expected</li>
-          <li>Loose jumper wires caused intermittent failures</li>
-          <li>Need PCB or soldered solution</li>
+          <li>Setup of Max30102 sensor complete.</li>
+          <li>Soldered the pins onto the sensors but it did not work. As an alternative I used jumper wires and taped the sensor tightly for stability.</li>
+          <li>Made a simple code which plots change in raw signal data when finger is placed on the sensor.</li>
         </ul>
+
         <div class="media-grid">
-          <img src="images/phase2.jpeg" alt="Phase 2 prototype">
+          <img src="images/phase2.jpeg" alt="Phase 2 prototype" />
+          <img src="images/phase2plot.jpeg" alt="Phase 2 prototype plot" />
         </div>
+
       </div>
     </section>
 
     <!-- Phase 3 -->
     <section class="phase">
       <div class="phase-header">
-        <h2>Phase 3 — Iteration</h2>
-        <span class="status in-progress">In Progress</span>
+        <h2>Phase 3 — RPi High QualityCamera Installation</h2>
+        <span class="status done">Completed</span>
       </div>
       <div class="phase-content">
         <ul>
-          <li>Evaluating PCB layout options</li>
-          <li>Refactoring firmware</li>
+          <li>Setup 16mm camera on a tripod so that green light reflected from the hand can be captured.</li>
+          <li>Tripod does not seem well balanced and the camera is heavy, would need better support in the future to hold it in place.</li>
+          <li>16mm seemed too strong for the camera test, and would have to be improvised by placing the source of light far away. Alternatively, I plan to use 6mm to see if it detects closer objects with less blur</li>
           <li>Adding logging and error handling</li>
         </ul>
+
         <div class="media-grid">
-          <img src="images/phase3.jpeg" alt="Phase 3 iteration">
+          <img src="images/phase3.jpeg" alt="Phase 3 iteration" />
         </div>
+
       </div>
     </section>
 
@@ -209,9 +222,11 @@
           <li>Stress testing</li>
           <li>Power consumption measurements</li>
         </ul>
+
         <div class="media-grid">
-          <img src="images/phase4.jpeg" alt="Phase 4 testing">
+          <img src="images/phase4.jpg" alt="Phase 4 testing" />
         </div>
+
       </div>
     </section>
 
@@ -226,9 +241,11 @@
           <li>Final enclosure</li>
           <li>Documentation and release</li>
         </ul>
+
         <div class="media-grid">
-          <img src="images/phase5.jpeg" alt="Phase 5 final hardware">
+          <img src="images/phase5.jpg" alt="Phase 5 final hardware" />
         </div>
+
       </div>
     </section>
 
