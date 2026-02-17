@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>PulsePi Project Progress</title>
+
   <style>
     :root {
       --bg: #0f172a;
@@ -30,14 +31,22 @@
       text-align: center;
     }
 
+    .logo {
+      width: 65px;
+      height: auto;
+      margin-bottom: 1rem;
+      filter: drop-shadow(0 6px 16px rgba(0,0,0,0.4));
+      opacity: 0.95;
+    }
+
     header h1 {
       font-size: clamp(2rem, 4vw, 3rem);
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.75rem;
     }
 
     header p {
       color: var(--muted);
-      max-width: 700px;
+      max-width: 750px;
       margin: 0 auto;
     }
 
@@ -192,229 +201,126 @@
       user-select: none;
     }
 
-    .lightbox-close {
-      top: 1.5rem;
-      right: 2rem;
-    }
-
-    .lightbox-prev {
-      left: 2rem;
-      top: 50%;
-      transform: translateY(-50%);
-    }
-
-    .lightbox-next {
-      right: 2rem;
-      top: 50%;
-      transform: translateY(-50%);
-    }
+    .lightbox-close { top: 1.5rem; right: 2rem; }
+    .lightbox-prev { left: 2rem; top: 50%; transform: translateY(-50%); }
+    .lightbox-next { right: 2rem; top: 50%; transform: translateY(-50%); }
   </style>
 </head>
 
 <body>
 
-  <header>
-    <h1>PulsePi Project Log</h1>
-    <p>Documenting progress, failures, and lessons learned — in public.</p>
-  </header>
+<header>
+  <img src="images/logo.png" alt="PulsePi Logo" class="logo" />
+  <h1>PulsePi Project Log</h1>
+  <p>
+    A documented exploration into camera-based photoplethysmography 
+    using embedded systems and optical signal analysis.
+  </p>
+</header>
 
-  <main>
+<main>
 
-    <!-- Phase 1 -->
-    <section class="phase">
-      <div class="phase-header">
-        <h2>Phase 1 — Initial Setup</h2>
-        <span class="status done">Completed</span>
-      </div>
-      <div class="phase-content">
-        <ul>
-          <li>Raspberry Pi 5 Setup Complete.</li>
-          <li>Added peripherals for easier access as well as a monitor for future data visualization.</li>
-          <li>Running Rapsberry Pi Desktop OS.</li>
-        </ul>
-
-        <div class="media-grid">
-          <img src="images/phase1.jpeg" alt="Phase 1 hardware setup" />
-        </div>
-      </div>
-    </section>
-
-    <!-- Phase 2 -->
-    <section class="phase">
-      <div class="phase-header">
-        <h2>Phase 2 — First Prototype</h2>
-        <span class="status done">Completed</span>
-      </div>
-      <div class="phase-content">
-        <ul>
-          <li>Setup of Max30102 sensor complete.</li>
-          <li>Soldered the pins onto the sensors but it did not work. As an alternative I used jumper wires and taped the sensor tightly for stability.</li>
-          <li>Made a simple code which plots change in raw signal data when finger is placed on the sensor.</li>
-          
-        </ul>
-
-        <div class="media-grid">
-          <img src="images/phase2.jpeg" alt="Phase 2 prototype" />
-          <img src="images/phase2plot.jpeg" alt="Phase 2 prototype plot" />
-        </div>
-      </div>
-    </section>
-
-    <!-- Phase 3 -->
-    <section class="phase">
-      <div class="phase-header">
-        <h2>Phase 3 — RPi High QualityCamera Installation</h2>
-        <span class="status done">Completed</span>
-      </div>
-      <div class="phase-content">
-        <ul>
-          <li>Setup 16mm camera on a tripod so that green light reflected from the hand can be captured.</li>
-          <li>16mm seemed too strong for the camera test, and would have to be improvised by placing the source of light far away. Alternatively, I plan to use 6mm to see if it detects closer objects with less blur</li>
-          <li>Adding logging and error handling</li>
-        </ul>
-
-        <div class="media-grid">
-          <img src="images/phase3.jpeg" alt="Phase 3 iteration" />
-        </div>
-      </div>
-    </section>
-
-    <!-- Phase 4 -->
-    <section class="phase">
-      <div class="phase-header">
-        <h2>Phase 4 — Validation</h2>
-        <span class="status done">Complete</span>
-      </div>
-      <div class="phase-content">
-        <ul>
-          <li>Since I did not have a pressure cuff, I simulated blood perfusion by two methods:</li>
-            <ol>Keeping my left hand as it were, and keeping my right hand fingers on an ice pack for 2 minutes</ol>
-            <ol>Keeping my left hand as it were, and keeping my other arm above my head.</ol>
-          <li>Verified whether there is a dip in the signal for my right arm, keeping the left as a control.</li>
-          <li>MAX30102 showed a dip in the signal</li>
-          <li>A fixed-exposure Raspberry Pi HQ Camera measured the average green-channel intensity over time, and because hemoglobin absorbs green light, ice-induced vasoconstriction reduced blood volume in the finger, producing a measurable dip in the signal consistent with the MAX30102 IR reading</li>
-          <li>The code continuously captured camera frames, computed the mean of the green channel for each frame, stored those values over time, and plotted them to reveal intensity changes as a perfusion dip.</li>
-        </ul>
-
-        <div class="media-grid">
-          <img src="images/phase4.png" alt="Phase 4 testing" />
-          <video controls>
-            <source src="videos/screencapture.mp4" type="video/mp4">
-          </video>
-        </div>
-      </div>
-    </section>
-
-    <!-- Phase 5 -->
-    <section class="phase">
-      <div class="phase-header">
-        <h2>Phase 5 — Final Build</h2>
-        <span class="status in-progress">Planned and In Progress</span>
-      </div>
-      <div class="phase-content">
-        <ul>
-          <li>Final setup. The camera had to capture signal in the dark for preventing interference from other light sources.</li>
-          <li>Currently using KiCad to simulate the circuit and develop a printable circuit board for the layout, so as to switch over from a breadboard to a PCB.</li>
-        </ul>
-
-        <div class="media-grid">
-          <img src="images/phase5.jpeg" alt="Phase 5 final hardware" />
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-  <footer>
-    <p>Repo will eventually include schematics, firmware, and test data.</p>
-  </footer>
-
-  <!-- LIGHTBOX -->
-  <div class="lightbox" id="lightbox">
-    <span class="lightbox-close" id="close">&times;</span>
-    <span class="lightbox-prev" id="prev">&#10094;</span>
-    <span class="lightbox-next" id="next">&#10095;</span>
-    <div class="lightbox-content" id="content"></div>
+<!-- Phase 1 -->
+<section class="phase">
+  <div class="phase-header">
+    <h2>Phase 1 — Initial Setup</h2>
+    <span class="status done">Completed</span>
   </div>
+  <div class="phase-content">
+    <ul>
+      <li>Completed setup of Raspberry Pi 5 development environment.</li>
+      <li>Connected monitor and peripherals to support testing and data visualization.</li>
+      <li>Installed and configured Raspberry Pi Desktop OS.</li>
+    </ul>
+    <div class="media-grid">
+      <img src="images/phase1.jpeg" alt="Phase 1 hardware setup" />
+    </div>
+  </div>
+</section>
 
-  <script>
-    const lightbox = document.getElementById("lightbox");
-    const content = document.getElementById("content");
-    const closeBtn = document.getElementById("close");
-    const prevBtn = document.getElementById("prev");
-    const nextBtn = document.getElementById("next");
+<!-- Phase 2 -->
+<section class="phase">
+  <div class="phase-header">
+    <h2>Phase 2 — First Prototype</h2>
+    <span class="status done">Completed</span>
+  </div>
+  <div class="phase-content">
+    <ul>
+      <li>Integrated MAX30102 optical sensor module.</li>
+      <li>Initial soldered configuration failed; temporarily stabilized connections using jumper wires for validation testing.</li>
+      <li>Developed preliminary script to capture and plot raw signal variation during finger contact.</li>
+    </ul>
+    <div class="media-grid">
+      <img src="images/phase2.jpeg" alt="Phase 2 prototype" />
+      <img src="images/phase2plot.jpeg" alt="Phase 2 prototype plot" />
+    </div>
+  </div>
+</section>
 
-    let currentIndex = 0;
-    let currentMedia = [];
+<!-- Phase 3 -->
+<section class="phase">
+  <div class="phase-header">
+    <h2>Phase 3 — RPi High Quality Camera Installation</h2>
+    <span class="status done">Completed</span>
+  </div>
+  <div class="phase-content">
+    <ul>
+      <li>Mounted Raspberry Pi HQ Camera with 16mm lens on tripod for reflected green-light capture.</li>
+      <li>Observed focal compression with 16mm lens; evaluating 6mm alternative for improved near-field imaging.</li>
+      <li>Implemented structured logging and error handling.</li>
+    </ul>
+    <div class="media-grid">
+      <img src="images/phase3.jpeg" alt="Phase 3 iteration" />
+    </div>
+  </div>
+</section>
 
-    function openLightbox(mediaArray, index) {
-      currentMedia = mediaArray;
-      currentIndex = index;
-      showMedia();
-      lightbox.classList.add("active");
-    }
+<!-- Phase 4 -->
+<section class="phase">
+  <div class="phase-header">
+    <h2>Phase 4 — Validation</h2>
+    <span class="status done">Completed</span>
+  </div>
+  <div class="phase-content">
+    <ul>
+      <li>Simulated perfusion changes using ice-induced vasoconstriction and arm elevation.</li>
+      <li>Used contralateral hand as internal control.</li>
+      <li>Confirmed perfusion dip via MAX30102 infrared readings.</li>
+      <li>Configured camera with fixed exposure and computed mean green-channel intensity per frame.</li>
+      <li>Observed measurable intensity reduction consistent with hemoglobin absorption.</li>
+    </ul>
+    <div class="media-grid">
+      <img src="images/phase4.png" alt="Phase 4 testing" />
+      <video controls>
+        <source src="videos/screencapture.mp4" type="video/mp4">
+      </video>
+    </div>
+  </div>
+</section>
 
-    function showMedia() {
-      content.innerHTML = "";
-      let clone = currentMedia[currentIndex].cloneNode(true);
+<!-- Phase 5 -->
+<section class="phase">
+  <div class="phase-header">
+    <h2>Phase 5 — Final Build</h2>
+    <span class="status in-progress">In Progress</span>
+  </div>
+  <div class="phase-content">
+    <ul>
+      <li>Transitioning from breadboard prototype to PCB implementation.</li>
+      <li>Designing fabrication-ready board layout in KiCad.</li>
+      <li>Optimizing optical isolation to reduce ambient light interference.</li>
+    </ul>
+    <div class="media-grid">
+      <img src="images/phase5.jpeg" alt="Phase 5 final hardware" />
+    </div>
+  </div>
+</section>
 
-      if (clone.tagName === "VIDEO") {
-        clone.controls = true;
-        clone.autoplay = true;
-      }
+</main>
 
-      content.appendChild(clone);
-    }
-
-    function closeLightbox() {
-      lightbox.classList.remove("active");
-      content.innerHTML = "";
-    }
-
-    function nextMedia() {
-      currentIndex = (currentIndex + 1) % currentMedia.length;
-      showMedia();
-    }
-
-    function prevMedia() {
-      currentIndex = (currentIndex - 1 + currentMedia.length) % currentMedia.length;
-      showMedia();
-    }
-
-    document.querySelectorAll(".phase").forEach(phase => {
-      const media = Array.from(phase.querySelectorAll(".media-grid img, .media-grid video, .media-grid iframe"));
-      media.forEach((item, index) => {
-        item.addEventListener("click", () => openLightbox(media, index));
-      });
-    });
-
-    closeBtn.onclick = closeLightbox;
-    nextBtn.onclick = nextMedia;
-    prevBtn.onclick = prevMedia;
-
-    document.addEventListener("keydown", e => {
-      if (!lightbox.classList.contains("active")) return;
-      if (e.key === "Escape") closeLightbox();
-      if (e.key === "ArrowRight") nextMedia();
-      if (e.key === "ArrowLeft") prevMedia();
-    });
-
-    let touchStartX = 0;
-
-    lightbox.addEventListener("touchstart", e => {
-      touchStartX = e.changedTouches[0].screenX;
-    });
-
-    lightbox.addEventListener("touchend", e => {
-      let diff = e.changedTouches[0].screenX - touchStartX;
-      if (diff > 50) prevMedia();
-      if (diff < -50) nextMedia();
-    });
-
-    lightbox.addEventListener("click", e => {
-      if (e.target === lightbox) closeLightbox();
-    });
-  </script>
+<footer>
+  <p>Repository will include schematics, firmware, and validation datasets.</p>
+</footer>
 
 </body>
 </html>
