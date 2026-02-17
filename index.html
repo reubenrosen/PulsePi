@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>PulsePi Project Progress</title>
-
   <style>
     :root {
       --bg: #0f172a;
@@ -35,18 +34,18 @@
       width: 65px;
       height: auto;
       margin-bottom: 1rem;
-      filter: drop-shadow(0 6px 16px rgba(0,0,0,0.4));
       opacity: 0.95;
+      filter: drop-shadow(0 6px 16px rgba(0,0,0,0.4));
     }
 
     header h1 {
       font-size: clamp(2rem, 4vw, 3rem);
-      margin-bottom: 0.75rem;
+      margin-bottom: 0.5rem;
     }
 
     header p {
       color: var(--muted);
-      max-width: 750px;
+      max-width: 700px;
       margin: 0 auto;
     }
 
@@ -128,18 +127,11 @@
       transform: scale(1.05);
     }
 
-    .media-grid video {
-      object-fit: contain;
-    }
-
-    .media-grid iframe {
-      aspect-ratio: 16 / 9;
-    }
+    .media-grid video { object-fit: contain; }
+    .media-grid iframe { aspect-ratio: 16 / 9; }
 
     @media (max-width: 700px) {
-      .phase-content {
-        grid-template-columns: 1fr;
-      }
+      .phase-content { grid-template-columns: 1fr; }
     }
 
     footer {
@@ -212,10 +204,7 @@
 <header>
   <img src="images/logo.png" alt="PulsePi Logo" class="logo" />
   <h1>PulsePi Project Log</h1>
-  <p>
-    A documented exploration into camera-based photoplethysmography 
-    using embedded systems and optical signal analysis.
-  </p>
+  <p>Documenting progress, validation experiments, and engineering decisions in public.</p>
 </header>
 
 <main>
@@ -228,8 +217,8 @@
   </div>
   <div class="phase-content">
     <ul>
-      <li>Completed setup of Raspberry Pi 5 development environment.</li>
-      <li>Connected monitor and peripherals to support testing and data visualization.</li>
+      <li>Completed Raspberry Pi 5 setup.</li>
+      <li>Connected monitor and peripherals for development and visualization.</li>
       <li>Installed and configured Raspberry Pi Desktop OS.</li>
     </ul>
     <div class="media-grid">
@@ -247,8 +236,8 @@
   <div class="phase-content">
     <ul>
       <li>Integrated MAX30102 optical sensor module.</li>
-      <li>Initial soldered configuration failed; temporarily stabilized connections using jumper wires for validation testing.</li>
-      <li>Developed preliminary script to capture and plot raw signal variation during finger contact.</li>
+      <li>Initial soldered configuration failed; stabilized temporarily using jumper wires.</li>
+      <li>Developed script to plot raw signal variation during finger contact.</li>
     </ul>
     <div class="media-grid">
       <img src="images/phase2.jpeg" alt="Phase 2 prototype" />
@@ -265,9 +254,9 @@
   </div>
   <div class="phase-content">
     <ul>
-      <li>Mounted Raspberry Pi HQ Camera with 16mm lens on tripod for reflected green-light capture.</li>
-      <li>Observed focal compression with 16mm lens; evaluating 6mm alternative for improved near-field imaging.</li>
-      <li>Implemented structured logging and error handling.</li>
+      <li>Mounted 16mm lens camera on tripod for reflected green-light capture.</li>
+      <li>Evaluating 6mm lens for improved near-field focus.</li>
+      <li>Added logging and error handling.</li>
     </ul>
     <div class="media-grid">
       <img src="images/phase3.jpeg" alt="Phase 3 iteration" />
@@ -279,15 +268,15 @@
 <section class="phase">
   <div class="phase-header">
     <h2>Phase 4 — Validation</h2>
-    <span class="status done">Completed</span>
+    <span class="status done">Complete</span>
   </div>
   <div class="phase-content">
     <ul>
       <li>Simulated perfusion changes using ice-induced vasoconstriction and arm elevation.</li>
-      <li>Used contralateral hand as internal control.</li>
-      <li>Confirmed perfusion dip via MAX30102 infrared readings.</li>
-      <li>Configured camera with fixed exposure and computed mean green-channel intensity per frame.</li>
-      <li>Observed measurable intensity reduction consistent with hemoglobin absorption.</li>
+      <li>Used opposite hand as internal control.</li>
+      <li>MAX30102 confirmed measurable signal dip.</li>
+      <li>Camera computed mean green-channel intensity per frame to track perfusion change.</li>
+      <li>Observed green intensity reduction consistent with hemoglobin absorption.</li>
     </ul>
     <div class="media-grid">
       <img src="images/phase4.png" alt="Phase 4 testing" />
@@ -302,13 +291,12 @@
 <section class="phase">
   <div class="phase-header">
     <h2>Phase 5 — Final Build</h2>
-    <span class="status in-progress">In Progress</span>
+    <span class="status in-progress">Planned and In Progress</span>
   </div>
   <div class="phase-content">
     <ul>
-      <li>Transitioning from breadboard prototype to PCB implementation.</li>
-      <li>Designing fabrication-ready board layout in KiCad.</li>
-      <li>Optimizing optical isolation to reduce ambient light interference.</li>
+      <li>Preparing final dark-environment capture setup to reduce ambient interference.</li>
+      <li>Designing PCB layout in KiCad to transition from breadboard prototype.</li>
     </ul>
     <div class="media-grid">
       <img src="images/phase5.jpeg" alt="Phase 5 final hardware" />
@@ -321,6 +309,93 @@
 <footer>
   <p>Repository will include schematics, firmware, and validation datasets.</p>
 </footer>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <span class="lightbox-close" id="close">&times;</span>
+  <span class="lightbox-prev" id="prev">&#10094;</span>
+  <span class="lightbox-next" id="next">&#10095;</span>
+  <div class="lightbox-content" id="content"></div>
+</div>
+
+<script>
+  const lightbox = document.getElementById("lightbox");
+  const content = document.getElementById("content");
+  const closeBtn = document.getElementById("close");
+  const prevBtn = document.getElementById("prev");
+  const nextBtn = document.getElementById("next");
+
+  let currentIndex = 0;
+  let currentMedia = [];
+
+  function openLightbox(mediaArray, index) {
+    currentMedia = mediaArray;
+    currentIndex = index;
+    showMedia();
+    lightbox.classList.add("active");
+  }
+
+  function showMedia() {
+    content.innerHTML = "";
+    let clone = currentMedia[currentIndex].cloneNode(true);
+
+    if (clone.tagName === "VIDEO") {
+      clone.controls = true;
+      clone.autoplay = true;
+    }
+
+    content.appendChild(clone);
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove("active");
+    content.innerHTML = "";
+  }
+
+  function nextMedia() {
+    currentIndex = (currentIndex + 1) % currentMedia.length;
+    showMedia();
+  }
+
+  function prevMedia() {
+    currentIndex = (currentIndex - 1 + currentMedia.length) % currentMedia.length;
+    showMedia();
+  }
+
+  document.querySelectorAll(".phase").forEach(phase => {
+    const media = Array.from(phase.querySelectorAll(".media-grid img, .media-grid video, .media-grid iframe"));
+    media.forEach((item, index) => {
+      item.addEventListener("click", () => openLightbox(media, index));
+    });
+  });
+
+  closeBtn.onclick = closeLightbox;
+  nextBtn.onclick = nextMedia;
+  prevBtn.onclick = prevMedia;
+
+  document.addEventListener("keydown", e => {
+    if (!lightbox.classList.contains("active")) return;
+    if (e.key === "Escape") closeLightbox();
+    if (e.key === "ArrowRight") nextMedia();
+    if (e.key === "ArrowLeft") prevMedia();
+  });
+
+  let touchStartX = 0;
+
+  lightbox.addEventListener("touchstart", e => {
+    touchStartX = e.changedTouches[0].screenX;
+  });
+
+  lightbox.addEventListener("touchend", e => {
+    let diff = e.changedTouches[0].screenX - touchStartX;
+    if (diff > 50) prevMedia();
+    if (diff < -50) nextMedia();
+  });
+
+  lightbox.addEventListener("click", e => {
+    if (e.target === lightbox) closeLightbox();
+  });
+</script>
 
 </body>
 </html>
