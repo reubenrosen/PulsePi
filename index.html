@@ -87,7 +87,6 @@
       margin: 0;
     }
 
-    /* UPDATED LAYOUT */
     .phase-content {
       display: grid;
       grid-template-columns: 1fr 350px;
@@ -95,7 +94,6 @@
       align-items: start;
     }
 
-    /* MEDIA GRID (handles unlimited images + videos) */
     .media-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
@@ -111,6 +109,14 @@
       background: #000;
       object-fit: cover;
       aspect-ratio: 1 / 1;
+      cursor: pointer;
+      transition: transform 0.25s ease;
+    }
+
+    .media-grid img:hover,
+    .media-grid video:hover,
+    .media-grid iframe:hover {
+      transform: scale(1.05);
     }
 
     .media-grid video {
@@ -134,8 +140,73 @@
       font-size: 0.9rem;
     }
 
-    @media (max-width: 600px) {
-      .phase { padding: 1.25rem; }
+    /* LIGHTBOX */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      backdrop-filter: blur(10px);
+      background: rgba(0,0,0,0.85);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      z-index: 9999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .lightbox.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .lightbox-content {
+      position: relative;
+      max-width: 95vw;
+      max-height: 90vh;
+      animation: zoomIn 0.25s ease;
+    }
+
+    @keyframes zoomIn {
+      from { transform: scale(0.85); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .lightbox img,
+    .lightbox video,
+    .lightbox iframe {
+      max-width: 100%;
+      max-height: 90vh;
+      border-radius: 1rem;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+    }
+
+    .lightbox-close,
+    .lightbox-prev,
+    .lightbox-next {
+      position: absolute;
+      color: white;
+      font-size: 2rem;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .lightbox-close {
+      top: 1.5rem;
+      right: 2rem;
+    }
+
+    .lightbox-prev {
+      left: 2rem;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .lightbox-next {
+      right: 2rem;
+      top: 50%;
+      transform: translateY(-50%);
     }
   </style>
 </head>
@@ -165,7 +236,6 @@
         <div class="media-grid">
           <img src="images/phase1.jpeg" alt="Phase 1 hardware setup" />
         </div>
-
       </div>
     </section>
 
@@ -186,7 +256,6 @@
           <img src="images/phase2.jpeg" alt="Phase 2 prototype" />
           <img src="images/phase2plot.jpeg" alt="Phase 2 prototype plot" />
         </div>
-
       </div>
     </section>
 
@@ -207,7 +276,6 @@
         <div class="media-grid">
           <img src="images/phase3.jpeg" alt="Phase 3 iteration" />
         </div>
-
       </div>
     </section>
 
@@ -226,7 +294,6 @@
         <div class="media-grid">
           <img src="images/phase4.jpg" alt="Phase 4 testing" />
         </div>
-
       </div>
     </section>
 
@@ -245,7 +312,6 @@
         <div class="media-grid">
           <img src="images/phase5.jpg" alt="Phase 5 final hardware" />
         </div>
-
       </div>
     </section>
 
@@ -254,6 +320,93 @@
   <footer>
     <p>Repo will eventually include schematics, firmware, and test data.</p>
   </footer>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox">
+    <span class="lightbox-close" id="close">&times;</span>
+    <span class="lightbox-prev" id="prev">&#10094;</span>
+    <span class="lightbox-next" id="next">&#10095;</span>
+    <div class="lightbox-content" id="content"></div>
+  </div>
+
+  <script>
+    const lightbox = document.getElementById("lightbox");
+    const content = document.getElementById("content");
+    const closeBtn = document.getElementById("close");
+    const prevBtn = document.getElementById("prev");
+    const nextBtn = document.getElementById("next");
+
+    let currentIndex = 0;
+    let currentMedia = [];
+
+    function openLightbox(mediaArray, index) {
+      currentMedia = mediaArray;
+      currentIndex = index;
+      showMedia();
+      lightbox.classList.add("active");
+    }
+
+    function showMedia() {
+      content.innerHTML = "";
+      let clone = currentMedia[currentIndex].cloneNode(true);
+
+      if (clone.tagName === "VIDEO") {
+        clone.controls = true;
+        clone.autoplay = true;
+      }
+
+      content.appendChild(clone);
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove("active");
+      content.innerHTML = "";
+    }
+
+    function nextMedia() {
+      currentIndex = (currentIndex + 1) % currentMedia.length;
+      showMedia();
+    }
+
+    function prevMedia() {
+      currentIndex = (currentIndex - 1 + currentMedia.length) % currentMedia.length;
+      showMedia();
+    }
+
+    document.querySelectorAll(".phase").forEach(phase => {
+      const media = Array.from(phase.querySelectorAll(".media-grid img, .media-grid video, .media-grid iframe"));
+      media.forEach((item, index) => {
+        item.addEventListener("click", () => openLightbox(media, index));
+      });
+    });
+
+    closeBtn.onclick = closeLightbox;
+    nextBtn.onclick = nextMedia;
+    prevBtn.onclick = prevMedia;
+
+    document.addEventListener("keydown", e => {
+      if (!lightbox.classList.contains("active")) return;
+      if (e.key === "Escape") closeLightbox();
+      if (e.key === "ArrowRight") nextMedia();
+      if (e.key === "ArrowLeft") prevMedia();
+    });
+
+    let touchStartX = 0;
+
+    lightbox.addEventListener("touchstart", e => {
+      touchStartX = e.changedTouches[0].screenX;
+    });
+
+    lightbox.addEventListener("touchend", e => {
+      let diff = e.changedTouches[0].screenX - touchStartX;
+      if (diff > 50) prevMedia();
+      if (diff < -50) nextMedia();
+    });
+
+    lightbox.addEventListener("click", e => {
+      if (e.target === lightbox) closeLightbox();
+    });
+  </script>
 
 </body>
 </html>
