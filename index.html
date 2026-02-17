@@ -250,6 +250,7 @@
           <li>Setup of Max30102 sensor complete.</li>
           <li>Soldered the pins onto the sensors but it did not work. As an alternative I used jumper wires and taped the sensor tightly for stability.</li>
           <li>Made a simple code which plots change in raw signal data when finger is placed on the sensor.</li>
+          
         </ul>
 
         <div class="media-grid">
@@ -268,7 +269,6 @@
       <div class="phase-content">
         <ul>
           <li>Setup 16mm camera on a tripod so that green light reflected from the hand can be captured.</li>
-          <li>Tripod does not seem well balanced and the camera is heavy, would need better support in the future to hold it in place.</li>
           <li>16mm seemed too strong for the camera test, and would have to be improvised by placing the source of light far away. Alternatively, I plan to use 6mm to see if it detects closer objects with less blur</li>
           <li>Adding logging and error handling</li>
         </ul>
@@ -283,16 +283,24 @@
     <section class="phase">
       <div class="phase-header">
         <h2>Phase 4 — Validation</h2>
-        <span class="status in-progress">Planned</span>
+        <span class="status done">Complete</span>
       </div>
       <div class="phase-content">
         <ul>
-          <li>Stress testing</li>
-          <li>Power consumption measurements</li>
+          <li>Since I did not have a pressure cuff, I simulated blood perfusion by two methods:</li>
+            <ol>Keeping my left hand as it were, and keeping my right hand fingers on an ice pack for 2 minutes</ol>
+            <ol>Keeping my left hand as it were, and keeping my other arm above my head.</ol>
+          <li>Verified whether there is a dip in the signal for my right arm, keeping the left as a control.</li>
+          <li>MAX30102 showed a dip in the signal</li>
+          <li>A fixed-exposure Raspberry Pi HQ Camera measured the average green-channel intensity over time, and because hemoglobin absorbs green light, ice-induced vasoconstriction reduced blood volume in the finger, producing a measurable dip in the signal consistent with the MAX30102 IR reading</li>
+          <li>The code continuously captured camera frames, computed the mean of the green channel for each frame, stored those values over time, and plotted them to reveal intensity changes as a perfusion dip.</li>
         </ul>
 
         <div class="media-grid">
-          <img src="images/phase4.jpg" alt="Phase 4 testing" />
+          <img src="images/phase4.png" alt="Phase 4 testing" />
+          <video controls>
+            <source src="videos/screencapture.mp4" type="video/mp4">
+          </video>
         </div>
       </div>
     </section>
